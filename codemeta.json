@@ -1,0 +1,70 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "DUERP Interactif — Document Unique d'Évaluation des Risques Professionnels",
+  "description": "Application web monopage permettant aux collectivités territoriales et établissements publics de réaliser leur Document Unique d'Évaluation des Risques Professionnels (DUERP). Intègre 30 questions sur les risques professionnels classiques (12 familles) et 20 questions sur les Risques Psychosociaux selon les 6 dimensions du rapport Gollac (2011). Agrégation en temps réel, matrices de criticité, plan d'actions automatisé.",
+  "version": "2.0",
+  "dateCreated": "2024-01-01",
+  "dateModified": "2025-12-01",
+  "datePublished": "2025-01-01",
+  "license": "https://spdx.org/licenses/GPL-3.0-only",
+  "codeRepository": "https://github.com/[USERNAME]/duerp-interactif",
+  "url": "https://www.referentdeontologue.fr/document-unique",
+  "programmingLanguage": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "operatingSystem": "Tout navigateur web moderne",
+  "applicationCategory": "Santé et sécurité au travail",
+  "runtimePlatform": "Navigateur web",
+  "developmentStatus": "active",
+  "isAccessibleForFree": true,
+  "keywords": [
+    "DUERP",
+    "document unique",
+    "risques professionnels",
+    "risques psychosociaux",
+    "RPS",
+    "Gollac",
+    "prévention",
+    "santé au travail",
+    "collectivités territoriales",
+    "fonction publique territoriale",
+    "évaluation des risques"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Louis",
+      "familyName": "Mathevet-Bidini",
+      "affiliation": [
+        {
+          "@type": "Organization",
+          "name": "Université de Lorraine"
+        },
+        {
+          "@type": "Organization",
+          "name": "Université de Bourgogne Franche-Comté"
+        },
+        {
+          "@type": "Organization",
+          "name": "AP2DFP — Association pour la Promotion de la Déontologie dans la Fonction Publique"
+        },
+        {
+          "@type": "Organization",
+          "name": "ARDT — Association des Référents Déontologues Territoriaux"
+        }
+      ]
+    }
+  ],
+  "referencePublication": {
+    "@type": "ScholarlyArticle",
+    "name": "Contexte doctoral : éthique et déontologie dans la fonction publique territoriale",
+    "author": {
+      "@type": "Person",
+      "givenName": "Louis",
+      "familyName": "Mathevet-Bidini"
+    }
+  }
+}

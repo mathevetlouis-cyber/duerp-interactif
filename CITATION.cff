@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ce logiciel, merci de le citer comme indiqué ci-dessous."
+type: software
+title: "DUERP Interactif — Document Unique d'Évaluation des Risques Professionnels"
+version: "2.0"
+date-released: "2025-01-01"
+license: GPL-3.0
+repository-code: "https://github.com/[USERNAME]/duerp-interactif"
+url: "https://www.referentdeontologue.fr/document-unique"
+abstract: >-
+  Application web monopage permettant aux collectivités territoriales
+  et établissements publics de réaliser leur Document Unique d'Évaluation
+  des Risques Professionnels (DUERP). Intègre un questionnaire de
+  30 questions sur les risques professionnels classiques (12 familles)
+  et 20 questions sur les Risques Psychosociaux selon les 6 dimensions
+  du rapport Gollac (2011). Agrégation en temps réel, matrices de
+  criticité, plan d'actions automatisé.
+keywords:
+  - DUERP
+  - document unique
+  - risques professionnels
+  - risques psychosociaux
+  - RPS
+  - Gollac
+  - prévention
+  - santé au travail
+  - collectivités territoriales
+  - fonction publique territoriale
+  - droit public
+  - évaluation des risques
+authors:
+  - family-names: "Mathevet-Bidini"
+    given-names: "Louis"
+    orcid: ""
+    affiliation: >-
+      Université de Lorraine / Université de Bourgogne Franche-Comté ;
+      AP2DFP ; ARDT

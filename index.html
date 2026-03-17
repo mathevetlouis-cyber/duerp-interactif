@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUERP - Document Unique d'Évaluation des Risques Professionnels</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 95%;
+            max-width: 1400px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            background: white;
+            padding: 10px 10px 0 10px;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 18px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            background: #dee2e6;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #2c5530;
+            border-bottom: 3px solid #2c5530;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background-color: #2c5530; color: white; }
+        .btn-primary:hover { background-color: #1e3a21; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(44, 85, 48, 0.3); }
+        .btn-success { background-color: #28a745; color: white; }
+        .btn-success:hover { background-color: #218838; }
+        .btn-danger { background-color: #dc3545; color: white; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn-warning { background-color: #ffc107; color: #212529; }
+        .btn-warning:hover { background-color: #e0a800; }
+        .btn-info { background-color: #17a2b8; color: white; }
+        .btn-info:hover { background-color: #138496; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .btn-rps { background-color: #6f42c1; color: white; }
+        .btn-rps:hover { background-color: #5a32a3; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2c5530;
+        }
+
+        .section-title.rps { border-bottom-color: #6f42c1; }
+
+        .agent-card {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .agent-card.active { border-color: #2c5530; box-shadow: 0 4px 15px rgba(44, 85, 48, 0.2); }
+        .agent-card.completed { border-color: #28a745; background: linear-gradient(to right, #d4edda 0%, white 5%); }
+
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .agent-name { font-size: 18px; font-weight: 600; color: #2c5530; }
+
+        .agent-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-inprogress { background: #cce5ff; color: #004085; }
+        .status-completed { background: #d4edda; color: #155724; }
+
+        .qcm-section { margin-bottom: 25px; }
+
+        .qcm-category {
+            background: #e8f5e9;
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c5530;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .qcm-category.rps { background: #e8e0f0; color: #6f42c1; }
+
+        .qcm-category-count {
+            font-size: 12px;
+            background: rgba(0,0,0,0.1);
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+
+        .qcm-question {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #6c757d;
+        }
+
+        .qcm-question.answered { border-left-color: #28a745; }
+        .qcm-question.rps { border-left-color: #6f42c1; }
+        .qcm-question.rps.answered { border-left-color: #28a745; }
+        .qcm-question-number { font-size: 11px; color: #6c757d; margin-bottom: 5px; }
+        .qcm-question-text { font-weight: 500; margin-bottom: 12px; color: #343a40; line-height: 1.4; }
+        .qcm-options { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .qcm-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+
+        .qcm-option:hover { border-color: #2c5530; background: #e8f5e9; }
+        .qcm-option.selected { border-color: #2c5530; background: #2c5530; color: white; }
+        .qcm-option.rps:hover { border-color: #6f42c1; background: #e8e0f0; }
+        .qcm-option.rps.selected { border-color: #6f42c1; background: #6f42c1; color: white; }
+        .qcm-option input { display: none; }
+
+        .scale-options { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+
+        .scale-option {
+            text-align: center;
+            padding: 8px 4px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+        }
+
+        .scale-option:hover { border-color: #2c5530; }
+        .scale-option.selected { border-color: #2c5530; color: white; }
+        .scale-option.selected.scale-1 { background: #28a745; }
+        .scale-option.selected.scale-2 { background: #7cb342; }
+        .scale-option.selected.scale-3 { background: #ffc107; color: #212529; }
+        .scale-option.selected.scale-4 { background: #ff9800; }
+        .scale-option.selected.scale-5 { background: #dc3545; }
+        .scale-number { font-size: 16px; font-weight: 700; display: block; }
+
+        .progress-container { background: #e9ecef; border-radius: 10px; height: 20px; margin: 10px 0; overflow: hidden; }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .progress-bar.green { background: linear-gradient(90deg, #28a745, #2c5530); }
+        .progress-bar.purple { background: linear-gradient(90deg, #6f42c1, #9b59b6); }
+
+        .questionnaire-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+
+        .questionnaire-tab {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .questionnaire-tab:hover { border-color: #adb5bd; }
+        .questionnaire-tab.active.risques { border-color: #2c5530; background: #e8f5e9; }
+        .questionnaire-tab.active.rps { border-color: #6f42c1; background: #e8e0f0; }
+        .questionnaire-tab-icon { font-size: 24px; margin-bottom: 5px; }
+        .questionnaire-tab-title { font-weight: 600; font-size: 14px; }
+        .questionnaire-tab-count { font-size: 12px; color: #6c757d; margin-top: 3px; }
+
+        .table-container { overflow-x: auto; margin-top: 20px; }
+
+        table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
+        th, td { border: 1px solid #dee2e6; padding: 10px 8px; text-align: left; }
+
+        th {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th.rps-header { background: linear-gradient(135deg, #6f42c1 0%, #9b59b6 100%); }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #e8f5e9; }
+        .risk-low { background-color: #d4edda !important; }
+        .risk-medium { background-color: #fff3cd !important; }
+        .risk-high { background-color: #f8d7da !important; }
+
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: 60px repeat(5, 1fr);
+            grid-template-rows: 40px repeat(5, 1fr);
+            gap: 2px;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #dee2e6;
+        }
+
+        .matrix-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            background: #f8f9fa;
+            padding: 8px;
+            font-size: 11px;
+        }
+
+        .matrix-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .matrix-cell:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+        .matrix-cell.risk-low { background-color: #28a745; color: white; }
+        .matrix-cell.risk-medium { background-color: #ffc107; color: #212529; }
+        .matrix-cell.risk-high { background-color: #dc3545; color: white; }
+
+        .risk-count {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-number { font-size: 28px; font-weight: 700; color: #2c5530; margin: 5px 0; }
+        .stat-number.rps { color: #6f42c1; }
+        .stat-label { color: #6c757d; font-size: 12px; font-weight: 500; }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: white;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+
+        .legend { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 15px 0; font-size: 13px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-color { width: 20px; height: 14px; border-radius: 3px; }
+
+        .alert { padding: 12px 20px; border-radius: 5px; margin-bottom: 15px; display: none; }
+        .alert.show { display: block; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+        .realtime-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #2c5530;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+
+        .agent-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+
+        .agent-nav-btn {
+            padding: 8px 15px;
+            background: #e9ecef;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .agent-nav-btn:hover { background: #dee2e6; }
+        .agent-nav-btn.active { background: #2c5530; color: white; }
+        .agent-nav-btn.completed { background: #d4edda; border-color: #28a745; color: #155724; }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            margin-top: 40px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b6d4fe;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box.rps { background: #f3e8ff; border-color: #d4b6fe; }
+        .info-box h4 { margin: 0 0 10px 0; color: #084298; }
+        .info-box.rps h4 { color: #6f42c1; }
+        .info-box p { margin: 0; font-size: 14px; }
+        .help-text { font-size: 12px; color: #6c757d; margin-top: 5px; font-style: italic; }
+
+        @media screen and (max-width: 768px) {
+            .container { width: 100%; padding: 10px; }
+            .tabs { overflow-x: auto; flex-wrap: nowrap; }
+            .form-row { grid-template-columns: 1fr; }
+            .scale-options { grid-template-columns: repeat(5, 1fr); }
+            .qcm-options { flex-direction: column; }
+            .stats-container { grid-template-columns: 1fr 1fr; }
+            .questionnaire-tabs { flex-direction: column; }
+        }
+
+        @media print {
+            .tabs, .btn-group, button, .agent-nav { display: none !important; }
+            .tab-content { display: block !important; }
+            header { background: #2c5530 !important; -webkit-print-color-adjust: exact; }
+        }
+
+        .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible-header:hover { opacity: 0.9; }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .collapsible-content.open { max-height: 5000px; }
+        .collapse-icon { transition: transform 0.3s ease; }
+        .collapse-icon.open { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📋 DUERP - Document Unique d'Évaluation des Risques Professionnels</h1>
+        <p>Questionnaire complet : 30 questions risques + 20 questions RPS</p>
+    </header>
+
+    <div class="container">
+        <div id="alertContainer"></div>
+
+        <div style="background: white; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; gap: 15px; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div>
+                    <strong>📂 Établissement :</strong>
+                    <span id="currentEstablishment">Non configuré</span>
+                </div>
+                <div class="realtime-badge">
+                    <span class="pulse-dot"></span>
+                    Temps réel
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="exportToPDF()" class="btn-danger" style="padding: 8px 14px;">📄 PDF</button>
+                <button onclick="exportToJSON()" class="btn-success" style="padding: 8px 14px;">💾 Sauver</button>
+                <button onclick="document.getElementById('importJSON').click()" class="btn-warning" style="padding: 8px 14px;">📥 Charger</button>
+                <input type="file" id="importJSON" accept=".json" style="display: none;" onchange="importFromJSON(event)">
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('config')">⚙️ Configuration</button>
+            <button class="tab-button" onclick="openTab('questionnaires')">📝 Questionnaires</button>
+            <button class="tab-button" onclick="openTab('synthese')">📊 Synthèse Risques</button>
+            <button class="tab-button" onclick="openTab('syntheseRPS')">🧠 Synthèse RPS</button>
+            <button class="tab-button" onclick="openTab('matrice')">🎯 Matrices</button>
+            <button class="tab-button" onclick="openTab('actions')">📋 Plan d'Actions</button>
+            <button class="tab-button" onclick="openTab('parametres')">🔧 Paramètres</button>
+        </div>
+
+        <div id="config" class="tab-content active">
+            <h2 class="section-title">Configuration de l'évaluation</h2>
+
+            <div class="info-box">
+                <h4>ℹ️ Questionnaire complet en 50 questions</h4>
+                <p><strong>30 questions sur les risques professionnels classiques</strong> (TMS, chutes, manutention, chimique, bruit, électrique, etc.)<br>
+                <strong>20 questions sur les Risques Psychosociaux (RPS)</strong> selon les 6 dimensions du rapport Gollac<br><br>
+                Chaque agent choisit son unité de travail puis répond aux questions. Les résultats sont agrégés en temps réel.</p>
+            </div>
+
+            <div class="form-section">
+                <h3>Informations générales</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="establishmentName">Nom de l'établissement / Collectivité *</label>
+                        <input type="text" id="establishmentName" placeholder="Ex: Mairie de Villers-lès-Nancy">
+                    </div>
+                    <div class="form-group">
+                        <label for="evaluationDate">Date de l'évaluation</label>
+                        <input type="date" id="evaluationDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="evaluatorName">Responsable de l'évaluation</label>
+                        <input type="text" id="evaluatorName" placeholder="Nom du responsable">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Unités de Travail</h3>
+                <p class="help-text">Les unités de travail regroupent les postes ayant des conditions de travail similaires.</p>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 3;">
+                        <label for="newUT">Ajouter une unité de travail</label>
+                        <input type="text" id="newUT" placeholder="Ex: Services administratifs, Espaces verts...">
+                    </div>
+                    <div class="form-group" style="flex: 1; justify-content: flex-end;">
+                        <label>&nbsp;</label>
+                        <button onclick="addUT()" class="btn-success">➕ Ajouter</button>
+                    </div>
+                </div>
+
+                <h4>Unités de travail définies :</h4>
+                <div id="utList"></div>
+            </div>
+
+            <div class="form-section">
+                <h3>Configuration des questionnaires</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="agentCount">Nombre d'agents à interroger *</label>
+                        <input type="number" id="agentCount" min="1" max="200" value="10" placeholder="Ex: 10">
+                        <span class="help-text">Chaque agent remplira un questionnaire de 50 questions</span>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button onclick="initializeQuestionnaires()" class="btn-primary" style="font-size: 16px; padding: 15px 30px;">
+                        🚀 Lancer l'évaluation
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="questionnaires" class="tab-content">
+            <h2 class="section-title">Questionnaires des Agents</h2>
+
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span><strong>Progression globale</strong></span>
+                    <span id="globalProgress">0 / 0 questionnaires complétés</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar green" id="globalProgressBar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+
+            <div class="agent-nav" id="agentNavigation"></div>
+
+            <div id="questionnairesContainer">
+                <div class="info-box">
+                    <h4>📝 Aucun questionnaire configuré</h4>
+                    <p>Veuillez d'abord configurer l'évaluation dans l'onglet "Configuration".</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="synthese" class="tab-content">
+            <h2 class="section-title">Synthèse des Risques Professionnels</h2>
+            <div class="stats-container" id="syntheseStats"></div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Unité de Travail</th><th>Famille de Risque</th><th>Situation dangereuse</th>
+                            <th>Fréq.</th><th>Grav.</th><th>Criticité</th><th>Signalements</th><th>Priorité</th>
+                        </tr>
+                    </thead>
+                    <tbody id="syntheseTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="syntheseRPS" class="tab-content">
+            <h2 class="section-title rps">🧠 Synthèse des Risques Psychosociaux</h2>
+            <div class="info-box rps">
+                <h4>Les 6 dimensions du rapport Gollac</h4>
+                <p>L'évaluation RPS est structurée selon les recommandations du collège d'expertise sur le suivi statistique des risques psychosociaux au travail (2011).</p>
+            </div>
+            <div class="stats-container" id="syntheseRPSStats"></div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="rps-header">Unité de Travail</th><th class="rps-header">Dimension RPS</th>
+                            <th class="rps-header">Facteur de risque</th><th class="rps-header">Fréq.</th>
+                            <th class="rps-header">Impact</th><th class="rps-header">Criticité</th>
+                            <th class="rps-header">Signalements</th><th class="rps-header">Priorité</th>
+                        </tr>
+                    </thead>
+                    <tbody id="syntheseRPSTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="matrice" class="tab-content">
+            <h2 class="section-title">Matrices de Criticité</h2>
+            <div class="form-section" style="text-align: center;">
+                <label for="matriceUT" style="margin-right: 10px;">Filtrer par Unité de Travail :</label>
+                <select id="matriceUT" onchange="generateMatrices()" style="min-width: 200px;">
+                    <option value="">Toutes les unités</option>
+                </select>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3 style="text-align: center; color: #2c5530;">⚠️ Risques Professionnels</h3>
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background: #28a745;"></div><span>Faible</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: #ffc107;"></div><span>Modéré</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: #dc3545;"></div><span>Élevé</span></div>
+                    </div>
+                    <div class="risk-matrix" id="riskMatrixClassic"></div>
+                </div>
+                <div>
+                    <h3 style="text-align: center; color: #6f42c1;">🧠 Risques Psychosociaux</h3>
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background: #28a745;"></div><span>Faible</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: #ffc107;"></div><span>Modéré</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: #dc3545;"></div><span>Élevé</span></div>
+                    </div>
+                    <div class="risk-matrix" id="riskMatrixRPS"></div>
+                </div>
+            </div>
+            <div id="matrixDetails" style="margin-top: 30px;"></div>
+        </div>
+
+        <div id="actions" class="tab-content">
+            <h2 class="section-title">Plan d'Actions Préventives et Correctives</h2>
+            <div class="btn-group" style="margin-bottom: 20px;">
+                <button onclick="filterActions('all')" class="btn-secondary" id="filterAll">Tous</button>
+                <button onclick="filterActions('risques')" class="btn-primary" id="filterRisques">⚠️ Risques</button>
+                <button onclick="filterActions('rps')" class="btn-rps" id="filterRPS">🧠 RPS</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 4%;">#</th><th style="width: 5%;">Type</th><th style="width: 12%;">Unité</th>
+                            <th style="width: 15%;">Risque</th><th style="width: 6%;">Crit.</th>
+                            <th style="width: 25%;">Actions proposées</th><th style="width: 12%;">Responsable</th>
+                            <th style="width: 8%;">Délai</th><th style="width: 8%;">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody id="actionsTable"></tbody>
+                </table>
+            </div>
+            <div class="btn-group" style="margin-top: 20px;">
+                <button onclick="exportActionsToDoc()" class="btn-info">📝 Exporter en Word</button>
+            </div>
+        </div>
+
+        <div id="parametres" class="tab-content">
+            <h2 class="section-title">Paramètres</h2>
+            <div class="form-section">
+                <h3>Gestion des données</h3>
+                <div class="btn-group">
+                    <button onclick="clearAllData()" class="btn-danger">🗑️ Réinitialiser toutes les données</button>
+                    <button onclick="resetToDefaults()" class="btn-warning">🔄 Restaurer les paramètres par défaut</button>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>Aperçu du questionnaire</h3>
+                <p><strong>Risques professionnels :</strong> 30 questions réparties en 12 familles</p>
+                <p><strong>RPS :</strong> 20 questions réparties en 6 dimensions (Gollac)</p>
+                <div id="questionPreview" style="max-height: 400px; overflow-y: auto; margin-top: 15px;"></div>
+            </div>
+            <div class="form-section">
+                <h3>À propos</h3>
+                <p><strong>Version :</strong> 2.0</p>
+                <p><strong>Développeur :</strong> Louis MATHEVET-BIDINI</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        DUERP Interactif v2.0 - Questionnaire 30+20 questions - Développé par Louis MATHEVET-BIDINI
+    </div>
+
+    <script>
+        const defaultUnitesTravail = [
+            'Services administratifs', 'Accueil / Standard', 'Services techniques',
+            'Espaces verts', 'Voirie', 'Bâtiments', 'Restauration collective',
+            'Petite enfance / ATSEM', 'Animation / Jeunesse', 'Bibliothèque / Médiathèque',
+            'Police municipale', 'État civil', 'Urbanisme', 'Finances / Comptabilité'
+        ];
+
+        const riskFamilies = [
+            { id: 'tms', name: 'Troubles musculo-squelettiques', icon: '🦴' },
+            { id: 'chutes', name: 'Chutes', icon: '⚠️' },
+            { id: 'manutention', name: 'Manutention manuelle', icon: '📦' },
+            { id: 'chimique', name: 'Risques chimiques', icon: '🧪' },
+            { id: 'biologique', name: 'Risques biologiques', icon: '🦠' },
+            { id: 'bruit', name: 'Bruit et vibrations', icon: '🔊' },
+            { id: 'electrique', name: 'Risques électriques', icon: '⚡' },
+            { id: 'thermique', name: 'Ambiances thermiques', icon: '🌡️' },
+            { id: 'ecran', name: 'Travail sur écran', icon: '💻' },
+            { id: 'routier', name: 'Risque routier', icon: '🚗' },
+            { id: 'incendie', name: 'Incendie / Explosion', icon: '🔥' },
+            { id: 'machines', name: 'Machines et équipements', icon: '⚙️' }
+        ];
+
+        const riskQuestions = {
+            tms: [
+                { id: 'tms1', text: 'Effectuez-vous des gestes répétitifs (frappe clavier, vissage, découpe...) ?' },
+                { id: 'tms2', text: 'Travaillez-vous dans des postures contraignantes (bras en l\'air, dos courbé, accroupi...) ?' },
+                { id: 'tms3', text: 'Ressentez-vous des douleurs articulaires ou musculaires liées à votre travail ?' }
+            ],
+            chutes: [
+                { id: 'chutes1', text: 'Êtes-vous exposé(e) à des sols glissants, encombrés ou en mauvais état ?' },
+                { id: 'chutes2', text: 'Utilisez-vous des échelles, escabeaux ou travaillez-vous en hauteur ?' },
+                { id: 'chutes3', text: 'Empruntez-vous des escaliers ou des dénivelés fréquemment ?' }
+            ],
+            manutention: [
+                { id: 'manut1', text: 'Portez-vous ou déplacez-vous des charges de plus de 10 kg ?' },
+                { id: 'manut2', text: 'Effectuez-vous des efforts de poussée ou de traction importants ?' },
+                { id: 'manut3', text: 'Disposez-vous d\'aides à la manutention adaptées (chariot, diable, transpalette) ?' }
+            ],
+            chimique: [
+                { id: 'chim1', text: 'Utilisez-vous des produits d\'entretien, solvants, peintures ou autres produits chimiques ?' },
+                { id: 'chim2', text: 'Les fiches de données de sécurité (FDS) sont-elles accessibles et comprises ?' },
+                { id: 'chim3', text: 'Disposez-vous des équipements de protection adaptés (gants, masque, lunettes) ?' }
+            ],
+            biologique: [
+                { id: 'bio1', text: 'Êtes-vous en contact avec des déchets, eaux usées, animaux ou personnes malades ?' },
+                { id: 'bio2', text: 'Les moyens d\'hygiène sont-ils suffisants (lavage des mains, vestiaires, douches) ?' }
+            ],
+            bruit: [
+                { id: 'bruit1', text: 'Êtes-vous exposé(e) à un bruit gênant ou devez-vous élever la voix pour communiquer ?' },
+                { id: 'bruit2', text: 'Utilisez-vous des machines ou outils générant des vibrations ?' },
+                { id: 'bruit3', text: 'Des protections auditives sont-elles mises à disposition ?' }
+            ],
+            electrique: [
+                { id: 'elec1', text: 'Intervenez-vous sur ou à proximité d\'installations électriques ?' },
+                { id: 'elec2', text: 'Avez-vous reçu une habilitation électrique adaptée à vos tâches ?' }
+            ],
+            thermique: [
+                { id: 'therm1', text: 'Travaillez-vous en extérieur ou dans des locaux soumis au froid ou à la chaleur ?' },
+                { id: 'therm2', text: 'Disposez-vous de vêtements et équipements adaptés aux conditions climatiques ?' }
+            ],
+            ecran: [
+                { id: 'ecran1', text: 'Travaillez-vous sur écran plus de 4 heures par jour ?' },
+                { id: 'ecran2', text: 'Votre poste de travail est-il correctement aménagé (écran, siège, éclairage) ?' },
+                { id: 'ecran3', text: 'Souffrez-vous de fatigue visuelle, maux de tête ou douleurs cervicales ?' }
+            ],
+            routier: [
+                { id: 'routier1', text: 'Effectuez-vous des déplacements professionnels en véhicule ?' },
+                { id: 'routier2', text: 'Les véhicules de service sont-ils correctement entretenus et équipés ?' }
+            ],
+            incendie: [
+                { id: 'incendie1', text: 'Connaissez-vous les consignes d\'évacuation et l\'emplacement des extincteurs ?' },
+                { id: 'incendie2', text: 'Avez-vous participé à un exercice d\'évacuation dans l\'année ?' }
+            ],
+            machines: [
+                { id: 'machine1', text: 'Utilisez-vous des machines, outils électroportatifs ou équipements de travail ?' },
+                { id: 'machine2', text: 'Les dispositifs de sécurité des machines sont-ils en place et fonctionnels ?' },
+                { id: 'machine3', text: 'Avez-vous été formé(e) à l\'utilisation de ces équipements ?' }
+            ]
+        };
+
+        const rpsDimensions = [
+            { id: 'exigences', name: 'Exigences du travail', icon: '⏰', color: '#e74c3c' },
+            { id: 'emotions', name: 'Exigences émotionnelles', icon: '💔', color: '#e91e63' },
+            { id: 'autonomie', name: 'Autonomie', icon: '🎯', color: '#9c27b0' },
+            { id: 'rapports', name: 'Rapports sociaux', icon: '👥', color: '#673ab7' },
+            { id: 'conflits', name: 'Conflits de valeurs', icon: '⚖️', color: '#3f51b5' },
+            { id: 'insecurite', name: 'Insécurité', icon: '📉', color: '#2196f3' }
+        ];
+
+        const rpsQuestions = {
+            exigences: [
+                { id: 'exig1', text: 'Votre charge de travail est-elle excessive ou difficile à gérer ?' },
+                { id: 'exig2', text: 'Devez-vous travailler dans l\'urgence ou sous forte pression temporelle ?' },
+                { id: 'exig3', text: 'Vos objectifs de travail sont-ils clairement définis et atteignables ?' },
+                { id: 'exig4', text: 'Devez-vous interrompre fréquemment une tâche pour en faire une autre non prévue ?' }
+            ],
+            emotions: [
+                { id: 'emot1', text: 'Êtes-vous en contact avec un public parfois difficile ou agressif ?' },
+                { id: 'emot2', text: 'Devez-vous cacher vos émotions ou faire semblant d\'être de bonne humeur ?' },
+                { id: 'emot3', text: 'Êtes-vous confronté(e) à des situations de détresse ou de souffrance ?' }
+            ],
+            autonomie: [
+                { id: 'auto1', text: 'Avez-vous la possibilité d\'organiser votre travail comme vous le souhaitez ?' },
+                { id: 'auto2', text: 'Pouvez-vous utiliser pleinement vos compétences dans votre travail ?' },
+                { id: 'auto3', text: 'Avez-vous l\'occasion d\'apprendre des choses nouvelles ?' },
+                { id: 'auto4', text: 'Participez-vous aux décisions qui concernent votre travail ?' }
+            ],
+            rapports: [
+                { id: 'rapp1', text: 'Recevez-vous suffisamment de soutien de votre hiérarchie ?' },
+                { id: 'rapp2', text: 'Pouvez-vous compter sur l\'aide de vos collègues en cas de difficulté ?' },
+                { id: 'rapp3', text: 'Votre travail est-il reconnu à sa juste valeur ?' },
+                { id: 'rapp4', text: 'Êtes-vous exposé(e) à des situations de tension ou de conflit au travail ?' }
+            ],
+            conflits: [
+                { id: 'conf1', text: 'Vous arrive-t-il de faire des choses que vous désapprouvez dans votre travail ?' },
+                { id: 'conf2', text: 'Avez-vous les moyens de faire un travail de qualité ?' },
+                { id: 'conf3', text: 'Ressentez-vous un décalage entre vos valeurs et celles de votre organisation ?' }
+            ],
+            insecurite: [
+                { id: 'insec1', text: 'Craignez-vous pour la sécurité de votre emploi ?' },
+                { id: 'insec2', text: 'Vivez-vous des changements fréquents ou mal accompagnés dans votre travail ?' }
+            ]
+        };
+
+        const suggestedActions = {
+            tms: ['Formation gestes et postures', 'Aménagement ergonomique', 'Rotation des tâches', 'Pauses actives'],
+            chutes: ['Revêtement antidérapant', 'Éclairage renforcé', 'Rangement des circulations', 'Formation travail en hauteur'],
+            manutention: ['Aides mécaniques', 'Formation PRAP', 'Réorganisation des stockages', 'Limitation des charges'],
+            chimique: ['Substitution produits', 'Ventilation', 'EPI adaptés', 'Formation risque chimique'],
+            biologique: ['Protocoles d\'hygiène', 'Vaccination', 'EPI spécifiques', 'Information sur les risques'],
+            bruit: ['Protections auditives', 'Isolation phonique', 'Maintenance équipements', 'Mesures sonométriques'],
+            electrique: ['Habilitations électriques', 'Vérification installations', 'Consignation', 'EPI isolants'],
+            thermique: ['Vêtements adaptés', 'Aménagement horaires', 'Points d\'eau', 'Chauffage/climatisation'],
+            ecran: ['Écran adapté', 'Siège ergonomique', 'Pauses visuelles', 'Formation ergonomie'],
+            routier: ['Formation conduite', 'Entretien véhicules', 'Organisation déplacements', 'Kit sécurité'],
+            incendie: ['Formation évacuation', 'Exercices réguliers', 'Vérification extincteurs', 'Plan d\'évacuation'],
+            machines: ['Formation utilisation', 'Vérification protections', 'Maintenance préventive', 'Consignes sécurité'],
+            exigences: ['Analyse charge de travail', 'Planification réaliste', 'Renfort effectifs', 'Priorisation des tâches'],
+            emotions: ['Formation gestion du public', 'Soutien psychologique', 'Débriefing', 'Procédure incidents'],
+            autonomie: ['Délégation responsabilités', 'Formation continue', 'Entretiens professionnels', 'Espaces d\'initiative'],
+            rapports: ['Réunions d\'équipe', 'Médiation', 'Reconnaissance', 'Charte relationnelle'],
+            conflits: ['Clarification missions', 'Moyens adaptés', 'Dialogue social', 'Éthique professionnelle'],
+            insecurite: ['Communication transparente', 'Accompagnement changements', 'GPEC', 'Parcours professionnels']
+        };
+
+        let currentAgent = 0;
+        let currentQuestionnaireType = 'risques';
+        let actionsFilter = 'all';
+
+        let config = {
+            establishmentName: '',
+            evaluationDate: '',
+            evaluatorName: '',
+            uniteTravail: [...defaultUnitesTravail],
+            agentCount: 10,
+            agents: []
+        };
+
+        window.onload = function() {
+            loadConfig();
+            initializeUI();
+        };
+
+        function loadConfig() {
+            const saved = localStorage.getItem('duerp_v2_config');
+            if (saved) config = JSON.parse(saved);
+        }
+
+        function saveConfig() {
+            localStorage.setItem('duerp_v2_config', JSON.stringify(config));
+        }
+
+        function initializeUI() {
+            document.getElementById('establishmentName').value = config.establishmentName || '';
+            document.getElementById('evaluationDate').value = config.evaluationDate || new Date().toISOString().split('T')[0];
+            document.getElementById('evaluatorName').value = config.evaluatorName || '';
+            document.getElementById('agentCount').value = config.agentCount || 10;
+            document.getElementById('currentEstablishment').textContent = config.establishmentName || 'Non configuré';
+            displayUTList();
+            loadMatriceUTFilter();
+            displayQuestionPreview();
+            if (config.agents && config.agents.length > 0) {
+                renderQuestionnaires();
+                updateGlobalProgress();
+                updateSynthese();
+                updateSyntheseRPS();
+                generateMatrices();
+                generateActionsTable();
+            }
+        }
+
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let content of tabContents) content.classList.remove('active');
+            for (let button of tabButtons) button.classList.remove('active');
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            if (tabName === 'synthese') updateSynthese();
+            if (tabName === 'syntheseRPS') updateSyntheseRPS();
+            if (tabName === 'matrice') generateMatrices();
+            if (tabName === 'actions') generateActionsTable();
+            if (tabName === 'parametres') displayQuestionPreview();
+        }
+
+        function addUT() {
+            const input = document.getElementById('newUT');
+            const newUT = input.value.trim();
+            if (!newUT) { showAlert('Veuillez entrer un nom', 'danger'); return; }
+            if (config.uniteTravail.includes(newUT)) { showAlert('Existe déjà', 'danger'); return; }
+            config.uniteTravail.push(newUT);
+            saveConfig();
+            input.value = '';
+            displayUTList();
+            loadMatriceUTFilter();
+            showAlert('Unité ajoutée !', 'success');
+        }
+
+        function deleteUT(index) {
+            if (confirm('Supprimer cette unité ?')) {
+                config.uniteTravail.splice(index, 1);
+                saveConfig();
+                displayUTList();
+                loadMatriceUTFilter();
+            }
+        }
+
+        function displayUTList() {
+            const container = document.getElementById('utList');
+            if (!container) return;
+            container.innerHTML = config.uniteTravail.length === 0
+                ? '<p style="color: #6c757d;">Aucune unité définie</p>'
+                : config.uniteTravail.map((ut, i) => `
+                    <div class="list-item">
+                        <span>📁 ${ut}</span>
+                        <button onclick="deleteUT(${i})" class="btn-danger" style="padding: 5px 10px;">🗑️</button>
+                    </div>
+                `).join('');
+        }
+
+        function loadMatriceUTFilter() {
+            const select = document.getElementById('matriceUT');
+            if (!select) return;
+            select.innerHTML = '<option value="">Toutes les unités</option>' +
+                config.uniteTravail.map(ut => `<option value="${ut}">${ut}</option>`).join('');
+        }
+
+        function displayQuestionPreview() {
+            const container = document.getElementById('questionPreview');
+            if (!container) return;
+            let html = '<h4 style="color: #2c5530;">⚠️ Risques professionnels (30 questions)</h4>';
+            let qNum = 1;
+            riskFamilies.forEach(family => {
+                const questions = riskQuestions[family.id] || [];
+                html += `<p><strong>${family.icon} ${family.name}</strong> (${questions.length} questions)</p><ul>`;
+                questions.forEach(q => { html += `<li style="font-size: 12px; color: #666;">${qNum}. ${q.text}</li>`; qNum++; });
+                html += '</ul>';
+            });
+            html += '<h4 style="color: #6f42c1; margin-top: 20px;">🧠 RPS - Risques Psychosociaux (20 questions)</h4>';
+            qNum = 1;
+            rpsDimensions.forEach(dim => {
+                const questions = rpsQuestions[dim.id] || [];
+                html += `<p><strong>${dim.icon} ${dim.name}</strong> (${questions.length} questions)</p><ul>`;
+                questions.forEach(q => { html += `<li style="font-size: 12px; color: #666;">${qNum}. ${q.text}</li>`; qNum++; });
+                html += '</ul>';
+            });
+            container.innerHTML = html;
+        }
+
+        function initializeQuestionnaires() {
+            config.establishmentName = document.getElementById('establishmentName').value.trim();
+            config.evaluationDate = document.getElementById('evaluationDate').value;
+            config.evaluatorName = document.getElementById('evaluatorName').value.trim();
+            config.agentCount = parseInt(document.getElementById('agentCount').value) || 10;
+            if (!config.establishmentName) { showAlert('Entrez le nom de l\'établissement', 'danger'); return; }
+            if (config.uniteTravail.length === 0) { showAlert('Définissez au moins une unité de travail', 'danger'); return; }
+            config.agents = [];
+            for (let i = 0; i < config.agentCount; i++) {
+                config.agents.push({
+                    id: i, name: `Agent ${i + 1}`, uniteTravail: '',
+                    risksResponses: {}, rpsResponses: {},
+                    risksCompleted: false, rpsCompleted: false, completedAt: null
+                });
+            }
+            saveConfig();
+            document.getElementById('currentEstablishment').textContent = config.establishmentName;
+            renderQuestionnaires();
+            updateGlobalProgress();
+            document.querySelector('[onclick="openTab(\'questionnaires\')"]').click();
+            showAlert(`${config.agentCount} questionnaires créés !`, 'success');
+        }
+
+        function renderQuestionnaires() {
+            renderAgentNavigation();
+            renderCurrentAgentQuestionnaire();
+        }
+
+        function renderAgentNavigation() {
+            const container = document.getElementById('agentNavigation');
+            if (!config.agents || config.agents.length === 0) { container.innerHTML = ''; return; }
+            container.innerHTML = config.agents.map((agent, index) => {
+                const isComplete = agent.risksCompleted && agent.rpsCompleted;
+                return `<button class="agent-nav-btn ${index === currentAgent ? 'active' : ''} ${isComplete ? 'completed' : ''}"
+                        onclick="switchToAgent(${index})">${isComplete ? '✅' : '📝'} ${agent.name}</button>`;
+            }).join('');
+        }
+
+        function switchToAgent(index) { currentAgent = index; renderQuestionnaires(); }
+        function switchQuestionnaireType(type) { currentQuestionnaireType = type; renderCurrentAgentQuestionnaire(); }
+
+        function renderCurrentAgentQuestionnaire() {
+            const container = document.getElementById('questionnairesContainer');
+            if (!config.agents || config.agents.length === 0) {
+                container.innerHTML = `<div class="info-box"><h4>📝 Aucun questionnaire</h4><p>Configurez l'évaluation d'abord.</p></div>`;
+                return;
+            }
+            const agent = config.agents[currentAgent];
+            const risksAnswered = countAnswered(agent.risksResponses, 'risks');
+            const rpsAnswered = countAnswered(agent.rpsResponses, 'rps');
+            const totalRisks = getTotalQuestions('risks');
+            const totalRPS = getTotalQuestions('rps');
+            container.innerHTML = `
+                <div class="agent-card ${(agent.risksCompleted && agent.rpsCompleted) ? 'completed' : 'active'}">
+                    <div class="agent-header">
+                        <div><input type="text" value="${agent.name}" onchange="updateAgentName(${agent.id}, this.value)"
+                               style="font-size: 18px; font-weight: 600; border: none; background: transparent; color: #2c5530; width: 200px;"></div>
+                        <div style="display: flex; gap: 10px;">
+                            <span class="agent-status ${agent.risksCompleted ? 'status-completed' : 'status-inprogress'}">⚠️ ${agent.risksCompleted ? 'OK' : 'En cours'}</span>
+                            <span class="agent-status ${agent.rpsCompleted ? 'status-completed' : 'status-inprogress'}" style="background: ${agent.rpsCompleted ? '#d4edda' : '#e8e0f0'}; color: ${agent.rpsCompleted ? '#155724' : '#6f42c1'};">🧠 ${agent.rpsCompleted ? 'OK' : 'En cours'}</span>
+                        </div>
+                    </div>
+                    <div class="form-section" style="background: #e8f5e9;">
+                        <div class="form-group">
+                            <label><strong>🏢 Votre Unité de Travail *</strong></label>
+                            <select onchange="updateAgentUT(${agent.id}, this.value)">
+                                <option value="">-- Sélectionnez --</option>
+                                ${config.uniteTravail.map(ut => `<option value="${ut}" ${agent.uniteTravail === ut ? 'selected' : ''}>${ut}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="questionnaire-tabs">
+                        <div class="questionnaire-tab ${currentQuestionnaireType === 'risques' ? 'active risques' : ''}" onclick="switchQuestionnaireType('risques')">
+                            <div class="questionnaire-tab-icon">⚠️</div>
+                            <div class="questionnaire-tab-title">Risques Professionnels</div>
+                            <div class="questionnaire-tab-count">${risksAnswered}/${totalRisks} questions</div>
+                            <div class="progress-container" style="height: 6px; margin-top: 8px;"><div class="progress-bar green" style="width: ${(risksAnswered/totalRisks)*100}%;"></div></div>
+                        </div>
+                        <div class="questionnaire-tab ${currentQuestionnaireType === 'rps' ? 'active rps' : ''}" onclick="switchQuestionnaireType('rps')">
+                            <div class="questionnaire-tab-icon">🧠</div>
+                            <div class="questionnaire-tab-title">Risques Psychosociaux</div>
+                            <div class="questionnaire-tab-count">${rpsAnswered}/${totalRPS} questions</div>
+                            <div class="progress-container" style="height: 6px; margin-top: 8px;"><div class="progress-bar purple" style="width: ${(rpsAnswered/totalRPS)*100}%;"></div></div>
+                        </div>
+                    </div>
+                    <div id="questionsContainer">${currentQuestionnaireType === 'risques' ? renderRisksQuestions(agent) : renderRPSQuestions(agent)}</div>
+                    <div class="btn-group" style="margin-top: 20px; justify-content: center;">
+                        ${currentQuestionnaireType === 'risques' ? `
+                            <button onclick="validateRisks(${agent.id})" class="btn-success">✅ Valider Risques (${risksAnswered}/${totalRisks})</button>
+                            <button onclick="switchQuestionnaireType('rps')" class="btn-rps">Passer aux RPS ➡️</button>
+                        ` : `
+                            <button onclick="switchQuestionnaireType('risques')" class="btn-primary">⬅️ Retour Risques</button>
+                            <button onclick="validateRPS(${agent.id})" class="btn-rps">✅ Valider RPS (${rpsAnswered}/${totalRPS})</button>
+                        `}
+                    </div>
+                </div>`;
+        }
+
+        function renderRisksQuestions(agent) {
+            let html = '';
+            let globalNum = 1;
+            riskFamilies.forEach(family => {
+                const questions = riskQuestions[family.id] || [];
+                const answeredInFamily = questions.filter(q => agent.risksResponses[`${family.id}_${q.id}`]?.exposed !== undefined).length;
+                html += `<div class="qcm-section">
+                    <div class="qcm-category collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>${family.icon} ${family.name}</span>
+                        <span><span class="qcm-category-count">${answeredInFamily}/${questions.length}</span> <span class="collapse-icon">▼</span></span>
+                    </div>
+                    <div class="collapsible-content open">${questions.map(q => renderRiskQuestion(agent, family.id, q, globalNum++)).join('')}</div>
+                </div>`;
+            });
+            return html;
+        }
+
+        function renderRiskQuestion(agent, familyId, question, num) {
+            const key = `${familyId}_${question.id}`;
+            const response = agent.risksResponses[key] || {};
+            const isAnswered = response.exposed !== undefined;
+            return `<div class="qcm-question ${isAnswered ? 'answered' : ''}">
+                <div class="qcm-question-number">Question ${num}/30</div>
+                <div class="qcm-question-text">${question.text}</div>
+                <div style="margin-bottom: 12px;">
+                    <div class="qcm-options">
+                        <label class="qcm-option ${response.exposed === true ? 'selected' : ''}">
+                            <input type="radio" name="exp_${agent.id}_${key}" onchange="updateRiskResponse(${agent.id}, '${key}', 'exposed', true)"> Oui, exposé(e)
+                        </label>
+                        <label class="qcm-option ${response.exposed === false ? 'selected' : ''}">
+                            <input type="radio" name="exp_${agent.id}_${key}" onchange="updateRiskResponse(${agent.id}, '${key}', 'exposed', false)"> Non concerné(e)
+                        </label>
+                    </div>
+                </div>
+                ${response.exposed === true ? `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                        <div>
+                            <label style="font-size: 12px; color: #6c757d; display: block; margin-bottom: 5px;">Fréquence d'exposition</label>
+                            <div class="scale-options">${[1,2,3,4,5].map(n => `
+                                <div class="scale-option scale-${n} ${response.frequency === n ? 'selected' : ''}"
+                                     onclick="updateRiskResponse(${agent.id}, '${key}', 'frequency', ${n})">
+                                    <span class="scale-number">${n}</span>${['Rare', 'Occas.', 'Fréq.', 'T.Fréq.', 'Perm.'][n-1]}
+                                </div>`).join('')}</div>
+                        </div>
+                        <div>
+                            <label style="font-size: 12px; color: #6c757d; display: block; margin-bottom: 5px;">Gravité potentielle</label>
+                            <div class="scale-options">${[1,2,3,4,5].map(n => `
+                                <div class="scale-option scale-${n} ${response.severity === n ? 'selected' : ''}"
+                                     onclick="updateRiskResponse(${agent.id}, '${key}', 'severity', ${n})">
+                                    <span class="scale-number">${n}</span>${['Bénin', 'Faible', 'Modéré', 'Grave', 'Crit.'][n-1]}
+                                </div>`).join('')}</div>
+                        </div>
+                    </div>` : ''}
+            </div>`;
+        }
+
+        function renderRPSQuestions(agent) {
+            let html = '';
+            let globalNum = 1;
+            rpsDimensions.forEach(dim => {
+                const questions = rpsQuestions[dim.id] || [];
+                const answeredInDim = questions.filter(q => agent.rpsResponses[`${dim.id}_${q.id}`]?.exposed !== undefined).length;
+                html += `<div class="qcm-section">
+                    <div class="qcm-category rps collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>${dim.icon} ${dim.name}</span>
+                        <span><span class="qcm-category-count">${answeredInDim}/${questions.length}</span> <span class="collapse-icon">▼</span></span>
+                    </div>
+                    <div class="collapsible-content open">${questions.map(q => renderRPSQuestion(agent, dim.id, q, globalNum++)).join('')}</div>
+                </div>`;
+            });
+            return html;
+        }
+
+        function renderRPSQuestion(agent, dimId, question, num) {
+            const key = `${dimId}_${question.id}`;
+            const response = agent.rpsResponses[key] || {};
+            const isAnswered = response.exposed !== undefined;
+            return `<div class="qcm-question rps ${isAnswered ? 'answered' : ''}">
+                <div class="qcm-question-number">Question ${num}/20</div>
+                <div class="qcm-question-text">${question.text}</div>
+                <div style="margin-bottom: 12px;">
+                    <div class="qcm-options">
+                        <label class="qcm-option rps ${response.exposed === true ? 'selected' : ''}">
+                            <input type="radio" name="rps_${agent.id}_${key}" onchange="updateRPSResponse(${agent.id}, '${key}', 'exposed', true)"> Oui, concerné(e)
+                        </label>
+                        <label class="qcm-option rps ${response.exposed === false ? 'selected' : ''}">
+                            <input type="radio" name="rps_${agent.id}_${key}" onchange="updateRPSResponse(${agent.id}, '${key}', 'exposed', false)"> Non concerné(e)
+                        </label>
+                    </div>
+                </div>
+                ${response.exposed === true ? `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                        <div>
+                            <label style="font-size: 12px; color: #6c757d; display: block; margin-bottom: 5px;">Fréquence</label>
+                            <div class="scale-options">${[1,2,3,4,5].map(n => `
+                                <div class="scale-option scale-${n} ${response.frequency === n ? 'selected' : ''}"
+                                     onclick="updateRPSResponse(${agent.id}, '${key}', 'frequency', ${n})">
+                                    <span class="scale-number">${n}</span>${['Rare', 'Parfois', 'Souvent', 'T.souv.', 'Touj.'][n-1]}
+                                </div>`).join('')}</div>
+                        </div>
+                        <div>
+                            <label style="font-size: 12px; color: #6c757d; display: block; margin-bottom: 5px;">Impact ressenti</label>
+                            <div class="scale-options">${[1,2,3,4,5].map(n => `
+                                <div class="scale-option scale-${n} ${response.severity === n ? 'selected' : ''}"
+                                     onclick="updateRPSResponse(${agent.id}, '${key}', 'severity', ${n})">
+                                    <span class="scale-number">${n}</span>${['Faible', 'Léger', 'Moyen', 'Fort', 'T.fort'][n-1]}
+                                </div>`).join('')}</div>
+                        </div>
+                    </div>` : ''}
+            </div>`;
+        }
+
+        function toggleCollapsible(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.collapse-icon');
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+        }
+
+        function updateAgentName(agentId, name) {
+            config.agents[agentId].name = name.trim() || `Agent ${agentId + 1}`;
+            saveConfig();
+            renderAgentNavigation();
+        }
+
+        function updateAgentUT(agentId, ut) { config.agents[agentId].uniteTravail = ut; saveConfig(); updateInRealTime(); }
+
+        function updateRiskResponse(agentId, key, field, value) {
+            if (!config.agents[agentId].risksResponses[key]) config.agents[agentId].risksResponses[key] = {};
+            config.agents[agentId].risksResponses[key][field] = value;
+            if (field === 'exposed' && value === false) {
+                delete config.agents[agentId].risksResponses[key].frequency;
+                delete config.agents[agentId].risksResponses[key].severity;
+            }
+            saveConfig();
+            if (field === 'exposed') renderCurrentAgentQuestionnaire();
+            updateInRealTime();
+        }
+
+        function updateRPSResponse(agentId, key, field, value) {
+            if (!config.agents[agentId].rpsResponses[key]) config.agents[agentId].rpsResponses[key] = {};
+            config.agents[agentId].rpsResponses[key][field] = value;
+            if (field === 'exposed' && value === false) {
+                delete config.agents[agentId].rpsResponses[key].frequency;
+                delete config.agents[agentId].rpsResponses[key].severity;
+            }
+            saveConfig();
+            if (field === 'exposed') renderCurrentAgentQuestionnaire();
+            updateInRealTime();
+        }
+
+        function validateRisks(agentId) {
+            const agent = config.agents[agentId];
+            if (!agent.uniteTravail) { showAlert('Sélectionnez votre unité de travail', 'danger'); return; }
+            const answered = countAnswered(agent.risksResponses, 'risks');
+            if (answered < 10) { showAlert('Répondez à au moins 10 questions sur les risques', 'danger'); return; }
+            agent.risksCompleted = true;
+            saveConfig();
+            renderQuestionnaires();
+            updateInRealTime();
+            showAlert('Questionnaire Risques validé !', 'success');
+            if (!agent.rpsCompleted) setTimeout(() => switchQuestionnaireType('rps'), 300);
+        }
+
+        function validateRPS(agentId) {
+            const agent = config.agents[agentId];
+            if (!agent.uniteTravail) { showAlert('Sélectionnez votre unité de travail', 'danger'); return; }
+            const answered = countAnswered(agent.rpsResponses, 'rps');
+            if (answered < 8) { showAlert('Répondez à au moins 8 questions sur les RPS', 'danger'); return; }
+            agent.rpsCompleted = true;
+            agent.completedAt = new Date().toISOString();
+            saveConfig();
+            renderQuestionnaires();
+            updateInRealTime();
+            showAlert('Questionnaire RPS validé !', 'success');
+            if (currentAgent < config.agents.length - 1) setTimeout(() => switchToAgent(currentAgent + 1), 500);
+        }
+
+        function countAnswered(responses, type) { return Object.keys(responses).filter(k => responses[k].exposed !== undefined).length; }
+
+        function getTotalQuestions(type) {
+            if (type === 'risks') return Object.values(riskQuestions).reduce((sum, qs) => sum + qs.length, 0);
+            return Object.values(rpsQuestions).reduce((sum, qs) => sum + qs.length, 0);
+        }
+
+        function updateInRealTime() {
+            updateGlobalProgress();
+            updateSynthese();
+            updateSyntheseRPS();
+            generateMatrices();
+            generateActionsTable();
+        }
+
+        function updateGlobalProgress() {
+            if (!config.agents || config.agents.length === 0) return;
+            const fullyCompleted = config.agents.filter(a => a.risksCompleted && a.rpsCompleted).length;
+            const total = config.agents.length;
+            const percent = Math.round((fullyCompleted / total) * 100);
+            document.getElementById('globalProgress').textContent = `${fullyCompleted} / ${total} questionnaires complétés`;
+            const bar = document.getElementById('globalProgressBar');
+            bar.style.width = `${percent}%`;
+            bar.textContent = `${percent}%`;
+        }
+
+        function aggregateRisks(type = 'risks') {
+            const aggregated = {};
+            const questionsRef = type === 'risks' ? riskQuestions : rpsQuestions;
+            const familiesRef = type === 'risks' ? riskFamilies : rpsDimensions;
+            config.agents.forEach(agent => {
+                if (!agent.uniteTravail) return;
+                const responses = type === 'risks' ? agent.risksResponses : agent.rpsResponses;
+                Object.keys(responses).forEach(responseKey => {
+                    const response = responses[responseKey];
+                    if (!response.exposed || response.frequency === undefined || response.severity === undefined) return;
+                    const parts = responseKey.split('_');
+                    const familyId = parts[0];
+                    const questionId = parts.slice(1).join('_');
+                    const family = familiesRef.find(f => f.id === familyId);
+                    const questions = questionsRef[familyId] || [];
+                    const question = questions.find(q => q.id === questionId);
+                    if (!family || !question) return;
+                    const key = `${agent.uniteTravail}_${responseKey}`;
+                    if (!aggregated[key]) {
+                        aggregated[key] = {
+                            ut: agent.uniteTravail, familyId, familyName: family.name,
+                            familyIcon: family.icon, questionId, questionText: question.text,
+                            frequencies: [], severities: [], count: 0, type
+                        };
+                    }
+                    aggregated[key].frequencies.push(response.frequency);
+                    aggregated[key].severities.push(response.severity);
+                    aggregated[key].count++;
+                });
+            });
+            return Object.values(aggregated).map(risk => ({
+                ...risk,
+                avgFrequency: risk.frequencies.reduce((a, b) => a + b, 0) / risk.frequencies.length,
+                avgSeverity: risk.severities.reduce((a, b) => a + b, 0) / risk.severities.length,
+                criticity: Math.round((risk.frequencies.reduce((a, b) => a + b, 0) / risk.frequencies.length) *
+                                     (risk.severities.reduce((a, b) => a + b, 0) / risk.severities.length))
+            }));
+        }
+
+        function updateSynthese() {
+            const stats = document.getElementById('syntheseStats');
+            const table = document.getElementById('syntheseTable');
+            if (!stats || !table) return;
+            const risks = aggregateRisks('risks').sort((a, b) => b.criticity - a.criticity);
+            const high = risks.filter(r => r.criticity >= 15).length;
+            const medium = risks.filter(r => r.criticity >= 5 && r.criticity < 15).length;
+            const low = risks.filter(r => r.criticity < 5).length;
+            stats.innerHTML = `
+                <div class="stat-card"><div class="stat-label">Risques identifiés</div><div class="stat-number">${risks.length}</div></div>
+                <div class="stat-card" style="border-left: 4px solid #dc3545;"><div class="stat-label">Élevés</div><div class="stat-number" style="color:#dc3545;">${high}</div></div>
+                <div class="stat-card" style="border-left: 4px solid #ffc107;"><div class="stat-label">Modérés</div><div class="stat-number" style="color:#e0a800;">${medium}</div></div>
+                <div class="stat-card" style="border-left: 4px solid #28a745;"><div class="stat-label">Faibles</div><div class="stat-number" style="color:#28a745;">${low}</div></div>`;
+            table.innerHTML = risks.length === 0
+                ? '<tr><td colspan="8" style="text-align:center;color:#6c757d;">Aucun risque signalé</td></tr>'
+                : risks.map(r => {
+                    const cls = r.criticity >= 15 ? 'risk-high' : (r.criticity >= 5 ? 'risk-medium' : 'risk-low');
+                    const prio = r.criticity >= 15 ? '🔴 Urgent' : (r.criticity >= 5 ? '🟡 Moyen' : '🟢 Faible');
+                    return `<tr class="${cls}"><td>${r.ut}</td><td>${r.familyIcon} ${r.familyName}</td><td>${r.questionText}</td>
+                        <td style="text-align:center;">${r.avgFrequency.toFixed(1)}</td><td style="text-align:center;">${r.avgSeverity.toFixed(1)}</td>
+                        <td style="text-align:center;font-weight:bold;">${r.criticity}</td><td style="text-align:center;">${r.count}</td><td>${prio}</td></tr>`;
+                }).join('');
+        }
+
+        function updateSyntheseRPS() {
+            const stats = document.getElementById('syntheseRPSStats');
+            const table = document.getElementById('syntheseRPSTable');
+            if (!stats || !table) return;
+            const risks = aggregateRisks('rps').sort((a, b) => b.criticity - a.criticity);
+            const high = risks.filter(r => r.criticity >= 15).length;
+            const medium = risks.filter(r => r.criticity >= 5 && r.criticity < 15).length;
+            const low = risks.filter(r => r.criticity < 5).length;
+            stats.innerHTML = `
+                <div class="stat-card"><div class="stat-label">Facteurs RPS identifiés</div><div class="stat-number rps">${risks.length}</div></div>
+                <div class="stat-card" style="border-left: 4px solid #dc3545;"><div class="stat-label">Critiques</div><div class="stat-number" style="color:#dc3545;">${high}</div></div>
+                <div class="stat-card" style="border-left: 4px solid #ffc107;"><div class="stat-label">À surveiller</div><div class="stat-number" style="color:#e0a800;">${medium}</div></div>
+                <div class="stat-card" style="border-left: 4px solid #28a745;"><div class="stat-label">Maîtrisés</div><div class="stat-number" style="color:#28a745;">${low}</div></div>`;
+            table.innerHTML = risks.length === 0
+                ? '<tr><td colspan="8" style="text-align:center;color:#6c757d;">Aucun facteur RPS signalé</td></tr>'
+                : risks.map(r => {
+                    const cls = r.criticity >= 15 ? 'risk-high' : (r.criticity >= 5 ? 'risk-medium' : 'risk-low');
+                    const prio = r.criticity >= 15 ? '🔴 Critique' : (r.criticity >= 5 ? '🟡 Surveiller' : '🟢 Maîtrisé');
+                    return `<tr class="${cls}"><td>${r.ut}</td><td>${r.familyIcon} ${r.familyName}</td><td>${r.questionText}</td>
+                        <td style="text-align:center;">${r.avgFrequency.toFixed(1)}</td><td style="text-align:center;">${r.avgSeverity.toFixed(1)}</td>
+                        <td style="text-align:center;font-weight:bold;">${r.criticity}</td><td style="text-align:center;">${r.count}</td><td>${prio}</td></tr>`;
+                }).join('');
+        }
+
+        function generateMatrices() { generateMatrix('riskMatrixClassic', 'risks'); generateMatrix('riskMatrixRPS', 'rps'); }
+
+        function generateMatrix(containerId, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const filterUT = document.getElementById('matriceUT')?.value || '';
+            const risks = aggregateRisks(type).filter(r => !filterUT || r.ut === filterUT);
+            const grid = {};
+            for (let g = 1; g <= 5; g++) for (let f = 1; f <= 5; f++) grid[`${g}_${f}`] = [];
+            risks.forEach(risk => {
+                const g = Math.min(5, Math.max(1, Math.round(risk.avgSeverity)));
+                const f = Math.min(5, Math.max(1, Math.round(risk.avgFrequency)));
+                grid[`${g}_${f}`].push(risk);
+            });
+            let html = '<div class="matrix-label"></div>';
+            for (let f = 1; f <= 5; f++) html += `<div class="matrix-label">F${f}</div>`;
+            for (let g = 5; g >= 1; g--) {
+                html += `<div class="matrix-label">G${g}</div>`;
+                for (let f = 1; f <= 5; f++) {
+                    const crit = g * f;
+                    const cls = crit >= 15 ? 'risk-high' : (crit >= 5 ? 'risk-medium' : 'risk-low');
+                    const count = grid[`${g}_${f}`].length;
+                    html += `<div class="matrix-cell ${cls}" onclick="showMatrixDetails(${g}, ${f}, '${type}')">${crit}${count > 0 ? `<span class="risk-count">${count}</span>` : ''}</div>`;
+                }
+            }
+            container.innerHTML = html;
+        }
+
+        function showMatrixDetails(g, f, type) {
+            const filterUT = document.getElementById('matriceUT')?.value || '';
+            const risks = aggregateRisks(type).filter(r => {
+                const rg = Math.round(r.avgSeverity);
+                const rf = Math.round(r.avgFrequency);
+                return rg === g && rf === f && (!filterUT || r.ut === filterUT);
+            });
+            const container = document.getElementById('matrixDetails');
+            const typeLabel = type === 'risks' ? 'Risques' : 'RPS';
+            container.innerHTML = risks.length === 0
+                ? `<div class="info-box"><p>Aucun ${typeLabel.toLowerCase()} dans cette cellule</p></div>`
+                : `<h3 class="section-title">${typeLabel} - Criticité ${g*f}</h3>
+                   <table><thead><tr><th>Unité</th><th>Catégorie</th><th>Situation</th><th>Signalements</th></tr></thead>
+                   <tbody>${risks.map(r => `<tr><td>${r.ut}</td><td>${r.familyName}</td><td>${r.questionText}</td><td style="text-align:center;">${r.count}</td></tr>`).join('')}</tbody></table>`;
+        }
+
+        function filterActions(filter) {
+            actionsFilter = filter;
+            document.querySelectorAll('#actions .btn-group button').forEach(b => b.classList.remove('active'));
+            generateActionsTable();
+        }
+
+        function generateActionsTable() {
+            const container = document.getElementById('actionsTable');
+            if (!container) return;
+            let allRisks = [...aggregateRisks('risks').map(r => ({...r, typeLabel: '⚠️'})),
+                           ...aggregateRisks('rps').map(r => ({...r, typeLabel: '🧠'}))];
+            if (actionsFilter === 'risques') allRisks = allRisks.filter(r => r.type === 'risks');
+            if (actionsFilter === 'rps') allRisks = allRisks.filter(r => r.type === 'rps');
+            allRisks.sort((a, b) => b.criticity - a.criticity);
+            container.innerHTML = allRisks.length === 0
+                ? '<tr><td colspan="9" style="text-align:center;color:#6c757d;">Aucune action à planifier</td></tr>'
+                : allRisks.map((r, i) => {
+                    const cls = r.criticity >= 15 ? 'risk-high' : (r.criticity >= 5 ? 'risk-medium' : 'risk-low');
+                    const actions = (suggestedActions[r.familyId] || ['Action à définir']).slice(0, 2);
+                    const delay = r.criticity >= 15 ? 'Immédiat' : (r.criticity >= 5 ? '3 mois' : '12 mois');
+                    return `<tr><td>${i + 1}</td><td>${r.typeLabel}</td><td>${r.ut}</td>
+                        <td><strong>${r.familyName}</strong><br><small>${r.questionText.substring(0, 50)}...</small></td>
+                        <td class="${cls}" style="text-align:center;font-weight:bold;">${r.criticity}</td>
+                        <td><ul style="margin:0;padding-left:15px;font-size:11px;">${actions.map(a => `<li>${a}</li>`).join('')}</ul></td>
+                        <td><input type="text" placeholder="À définir" style="width:100%;font-size:11px;"></td>
+                        <td>${delay}</td>
+                        <td><select style="width:100%;font-size:11px;"><option>À faire</option><option>En cours</option><option>Fait</option></select></td></tr>`;
+                }).join('');
+        }
+
+        function exportToJSON() {
+            const blob = new Blob([JSON.stringify({ exportDate: new Date().toISOString(), config }, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `duerp_${(config.establishmentName || 'export').replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            showAlert('Données exportées !', 'success');
+        }
+
+        function importFromJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (confirm('Importer ces données ?')) {
+                        config = data.config;
+                        saveConfig();
+                        initializeUI();
+                        showAlert('Import réussi !', 'success');
+                    }
+                } catch (err) { showAlert('Fichier invalide', 'danger'); }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function exportToPDF() { window.print(); }
+
+        function exportActionsToDoc() {
+            let allRisks = [...aggregateRisks('risks'), ...aggregateRisks('rps')].sort((a, b) => b.criticity - a.criticity);
+            const content = `<html><head><meta charset="UTF-8"><title>Plan d'Actions DUERP</title>
+                <style>body{font-family:Arial;font-size:11px;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #000;padding:6px;}th{background:#2c5530;color:white;}.high{background:#f8d7da;}.medium{background:#fff3cd;}.low{background:#d4edda;}</style></head>
+                <body><h1>Plan d'Actions DUERP</h1><p><b>Établissement:</b> ${config.establishmentName}</p><p><b>Date:</b> ${config.evaluationDate}</p>
+                <table><tr><th>#</th><th>Type</th><th>Unité</th><th>Risque</th><th>Crit.</th><th>Actions</th><th>Délai</th></tr>
+                ${allRisks.map((r, i) => {
+                    const cls = r.criticity >= 15 ? 'high' : (r.criticity >= 5 ? 'medium' : 'low');
+                    const actions = (suggestedActions[r.familyId] || ['À définir']).slice(0, 2).join(', ');
+                    const delay = r.criticity >= 15 ? 'Immédiat' : (r.criticity >= 5 ? '3 mois' : '12 mois');
+                    return `<tr class="${cls}"><td>${i+1}</td><td>${r.type === 'risks' ? 'Risque' : 'RPS'}</td><td>${r.ut}</td><td>${r.familyName}</td><td>${r.criticity}</td><td>${actions}</td><td>${delay}</td></tr>`;
+                }).join('')}</table>
+                <p style="margin-top:30px;font-size:10px;text-align:right;">DUERP - Louis MATHEVET-BIDINI</p></body></html>`;
+            const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `plan_actions_duerp_${new Date().toISOString().split('T')[0]}.doc`;
+            link.click();
+            showAlert('Export Word terminé !', 'success');
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ Supprimer TOUTES les données ?')) {
+                localStorage.removeItem('duerp_v2_config');
+                config = { establishmentName: '', evaluationDate: '', evaluatorName: '', uniteTravail: [...defaultUnitesTravail], agentCount: 10, agents: [] };
+                saveConfig();
+                initializeUI();
+                showAlert('Données supprimées', 'success');
+            }
+        }
+
+        function resetToDefaults() {
+            if (confirm('Réinitialiser les paramètres ?')) {
+                config.uniteTravail = [...defaultUnitesTravail];
+                saveConfig();
+                initializeUI();
+                showAlert('Paramètres réinitialisés', 'success');
+            }
+        }
+
+        function showAlert(message, type = 'info') {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} show`;
+            alert.textContent = message;
+            container.appendChild(alert);
+            setTimeout(() => { alert.classList.remove('show'); setTimeout(() => alert.remove(), 300); }, 3000);
+        }
+    </script>
+</body>
+</html>
